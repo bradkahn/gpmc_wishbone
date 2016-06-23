@@ -87,8 +87,10 @@ architecture Behavioral of intercon is
 	 -- Define internal signals.
 	 ------------------------------------------------------------------
 	signal  ACK:        std_logic;
-	signal  ADR:        std_logic_vector(  4 downto 0 );
+--	signal  ADR:        std_logic_vector(  4 downto 0 );
 	signal  CLK:        std_logic;
+	signal  GPMC_CLK    std_logic;
+	signal  GPMC_RST    std_logic;
 	signal  DRD:        std_logic_vector( 31 downto 0 );
 	signal  DWR:        std_logic_vector( 31 downto 0 );
 	signal  RST:        std_logic;
@@ -98,21 +100,21 @@ architecture Behavioral of intercon is
 begin
 
 	Inst_syscon: syscon PORT MAP(
-			CLK_O => ,
-			RST_O => ,
-			EXTCLK => ,
-			EXTTST => 
+			CLK_O => CLK,
+			RST_O => RST,
+			EXTCLK => GPMC_CLK,
+			EXTTST => GPMC_RST
 		);
 		
 	Inst_counter: counter PORT MAP(
-		ACK_O => ,
-		CLK_I => ,
-		DAT_I => ,
-		DAT_O => ,
-		RST_I => ,
-		STB_I => ,
-		WE_I => ,
-		PRT_O => 
+		ACK_O => ACK,
+		CLK_I => CLK,
+		DAT_I => DWD,
+		DAT_O => DRD,
+		RST_I => RST,
+		STB_I => STB,
+		WE_I => WE,
+		PRT_O => -- to LEDS
 	);
 	
 	Inst_gpmc_wishbone: gpmc_wishbone PORT MAP(
@@ -124,16 +126,16 @@ begin
 		gpmc_n_oe => ,
 		gpmc_n_adv_ale => ,
 		gpmc_n_wp => ,
-		gpmc_clk => ,
-		wb_rst => ,
-		ACK_I => ,
-		CLK_I => ,
+		gpmc_clk => GPMC_CLK,
+		wb_rst => GPMC_RST,
+		ACK_I => ACK,
+		CLK_I => CLK,
 		CYC_O => ,
-		DAT_I => ,
-		DAT_O => ,
-		RST_I => ,
-		STB_O => ,
-		WE_O => 
+		DAT_I => DRD,
+		DAT_O => DWD,
+		RST_I => RST,
+		STB_O => STB,
+		WE_O => WE
 	);
 end Behavioral;
 

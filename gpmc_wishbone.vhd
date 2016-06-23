@@ -41,17 +41,19 @@ entity gpmc_wishbone is
 		gpmc_n_oe:		in std_logic;
 		gpmc_n_adv_ale:in std_logic;
 		gpmc_n_wp:		in std_logic;
-		gpmc_clk:		out std_logic;
+		gpmc_clk:		out std_logic; -- feeds SYSCON
+		
+		wb_rst:			out std_logic; -- feeds SYSCON
 		
 		-- WISHBONE MASTER INTERFACE PORTS
 		ACK_I:  in  std_logic;
-		ADR_O:  out std_logic_vector( 4  downto 0 );
+--		ADR_O:  out std_logic_vector( 4  downto 0 );
 		CLK_I:  in  std_logic;
 		CYC_O:  out std_logic;
 		DAT_I:  in  std_logic_vector( 31 downto 0 );
 		DAT_O:  out std_logic_vector( 31 downto 0 );
 		RST_I:  in  std_logic;
-		SEL_O:  out std_logic;
+--		SEL_O:  out std_logic;
 		STB_O:  out std_logic;
 		WE_O:   out std_logic
 	);
@@ -105,7 +107,7 @@ port map
     O => gpmc_clk_i_b
 );
 
-gpmc_clk      <= gpmc_clk_i_b;
+gpmc_clk <= gpmc_clk_i_b;
 
 -----------------------------------------------------------------------------------
 -- Register File: Read

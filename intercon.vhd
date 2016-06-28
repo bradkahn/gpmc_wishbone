@@ -30,6 +30,9 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity intercon is
+--ports:
+--inputs: clks, gpmc
+--outputs: LEDS, gpios?
 end intercon;
 
 architecture Behavioral of intercon is
@@ -130,7 +133,7 @@ begin
 		wb_rst => GPMC_RST,
 		ACK_I => ACK,
 		CLK_I => CLK,
-		CYC_O => ,
+		--CYC_O => '0',
 		DAT_I => DRD,
 		DAT_O => DWD,
 		RST_I => RST,
